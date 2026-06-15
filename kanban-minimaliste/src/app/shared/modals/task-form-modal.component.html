@@ -1,0 +1,62 @@
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" (click)="cancelled.emit()">
+    <div class="bg-white rounded-xl p-6 w-full max-w-lg flex flex-col gap-4" (click)="$event.stopPropagation()">
+
+        <div class="flex justify-between items-center">
+            <h2 class="text-lg font-medium">{{ isEdit ? 'Edit task' : 'New task' }}</h2>
+            <button class="text-gray-400 hover:text-gray-600" (click)="cancelled.emit()">✕</button>
+        </div>
+
+        <div class="flex flex-col gap-3">
+            <label class="flex flex-col gap-1 text-sm">
+                Title
+                <input class="border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-200"
+                    type="text" [(ngModel)]="form.title" placeholder="Task title" />
+            </label>
+
+            <label class="flex flex-col gap-1 text-sm">
+                Description
+                <textarea
+                    class="border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-200 resize-none"
+                    rows="3" [(ngModel)]="form.description" placeholder="Task description"></textarea>
+            </label>
+
+            <label class="flex flex-col gap-1 text-sm">
+                Status
+                <select class="border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-200"
+                    [(ngModel)]="form.status">
+                    @for (s of statuses; track s) {
+                    <option [value]="s">{{ s }}</option>
+                    }
+                </select>
+            </label>
+
+            <label class="flex flex-col gap-1 text-sm">
+                Priority
+                <input class="border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-200"
+                    type="number" [(ngModel)]="form.priority" min="1" max="4" />
+            </label>
+
+            <div class="flex flex-col gap-2">
+                <span class="text-sm">Tags</span>
+                <div class="flex flex-wrap gap-2">
+                    @for (tag of availableTags(); track tag.id) {
+                    <button type="button" (click)="toggleTag(tag.id)"
+                        class="px-3 py-1 rounded-full text-xs border transition-colors" [class]="isTagSelected(tag.id)
+                      ? 'bg-gray-800 text-white border-gray-800'
+                      : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'">
+                        {{ tag.name }}
+                    </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+            <button class="px-4 py-2 text-sm rounded-lg border hover:bg-gray-50"
+                (click)="cancelled.emit()">Cancel</button>
+            <button class="px-4 py-2 text-sm rounded-lg bg-gray-800 text-white hover:bg-gray-700" (click)="submit()">{{
+                isEdit ? 'Save' : 'Create' }}</button>
+        </div>
+
+    </div>
+</div>

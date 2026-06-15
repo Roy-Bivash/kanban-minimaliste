@@ -1,0 +1,16 @@
+<div class="border-2 border-slate-300">
+    <div class="py-1 px-2 border-b flex justify-between bg-slate-200">
+        <h2>{{ label }}</h2>
+        <span class="column-count">{{ tasks.length }}</span>
+    </div>
+
+    <div class="px-1">
+        @for (task of tasks; track task.id) {
+            <app-task-card [task]="task" (onEdit)="onEdit.emit($event)" (onDelete)="onDelete.emit($event)" />
+        }
+
+        @if (tasks.length === 0) {
+            <p class="italic">No tasks</p>
+        }
+    </div>
+</div>

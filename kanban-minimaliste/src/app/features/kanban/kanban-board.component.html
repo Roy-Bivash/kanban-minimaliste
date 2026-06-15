@@ -1,0 +1,20 @@
+<main class="mx-6 my-4">
+  <h1 class="text-3xl mb-2 border-b pb-1">Kanban board</h1>
+  <button (click)="openCreate()" class="px-4 py-0.5 text-sm rounded-md bg-gray-800 text-white hover:bg-gray-700" >+ New task</button>
+
+
+  <div class="grid grid-cols-4 gap-2 mt-2">
+    @for (col of columns; track col.status) {
+    <app-column [label]="col.label" [tasks]="tasksForColumn(col.status)" (onEdit)="openEdit($event)"
+      (onDelete)="openDelete($event)" />
+    }
+  </div>
+
+  @if (editingTask(); as task) {
+  <app-task-form-modal [task]="task" (saved)="onSaved($event)" (cancelled)="closeModals()" />
+  }
+
+  @if (deletingTask(); as task) {
+  <app-delete-confirm-modal [task]="task" (confirmed)="onDeleted($event)" (cancelled)="closeModals()" />
+  }
+</main>

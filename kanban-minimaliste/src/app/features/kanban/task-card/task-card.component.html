@@ -1,0 +1,23 @@
+<div class="border py-1 px-2 rounded-md my-2">
+
+    <h3 class="text-lg font-bold border-b">{{ task.title }}</h3>
+    <p class="task-description">{{ task.description }}</p>
+
+    @if (task.tags.length > 0) {
+    <div class="task-tags">
+        @for (tag of task.tags; track tag.id) {
+            <span class="border border-slate-300 text-sm rounded-full px-2 py-0.5 bg-slate-200">{{ tag.name }}</span>
+        }
+    </div>
+    }
+
+    <div class="flex justify-between mb-2">
+        <span class="task-date">{{ task.created_at | date:'mediumDate' }}</span>
+        <span class="">Priority : {{ task.priority }}</span>
+    </div>
+    <hr>
+    <div class="flex justify-around mt-2">
+        <button class="px-4 py-0.5 text-sm rounded-md border hover:bg-gray-50" (click)="onDelete.emit(task)">Delete</button>
+        <button class="px-4 py-0.5 text-sm rounded-md bg-gray-800 text-white hover:bg-gray-700" (click)="onEdit.emit(task)">Edit</button>
+    </div>
+</div>
