@@ -65,6 +65,8 @@ export class TaskFormModalComponent implements OnInit {
     }
 
     submit() {
+        if(!this.isFormValid()) return;
+
         if (this.isEdit) {
             const payload: UpdateTaskPayload = { ...this.form };
             this.taskService.update(this.task.id, payload).subscribe(task => this.saved.emit(task));
@@ -72,5 +74,26 @@ export class TaskFormModalComponent implements OnInit {
             const payload: CreateTaskPayload = { ...this.form };
             this.taskService.create(payload).subscribe(task => this.saved.emit(task));
         }
+    }
+
+    private isFormValid(): boolean {
+        if(this.form.title.trim() === "") {
+            alert("Error: The title is not valid");
+            return false;
+        }
+        if(this.form.description.trim() === "") {
+            alert("Error: The description is not valid");
+            return false;
+        }
+        if(this.form.status.trim() === "") {
+            alert("Error: The status is not valid");
+            return false;
+        }
+        if(this.form.priority < 0 || this.form.priority > 9) {
+            alert("Error: The priority is not valid");
+            return false;
+        }
+        
+        return true;
     }
 }

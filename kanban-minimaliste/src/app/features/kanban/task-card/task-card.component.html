@@ -1,10 +1,10 @@
-<div class="border py-1 px-2 rounded-md my-2">
+<div class="border py-1 px-2 rounded-md my-2 overflow-hidden">
 
     <h3 class="text-lg font-bold border-b">{{ task.title }}</h3>
-    <p class="task-description">{{ task.description }}</p>
+    <p class="task-description wrap-break-word">{{ task.description }}</p>
 
     @if (task.tags.length > 0) {
-    <div class="task-tags">
+    <div class="task-tags flex flex-wrap gap-1">
         @for (tag of task.tags; track tag.id) {
             <span class="border border-slate-300 text-sm rounded-full px-2 py-0.5 bg-slate-200">{{ tag.name }}</span>
         }
